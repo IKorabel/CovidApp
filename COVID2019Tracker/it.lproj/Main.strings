@@ -1,0 +1,93 @@
+
+/* Class = "UILabel"; text = "INFECTED"; ObjectID = "2c2-rn-CJy"; */
+"2c2-rn-CJy.text" = "INFECTED";
+
+/* Class = "UIButton"; normalTitle = "BUY PRODUCTS"; ObjectID = "6XV-KC-6ey"; */
+"6XV-KC-6ey.normalTitle" = "BUY PRODUCTS";
+
+/* Class = "UILabel"; text = "RECOVERED"; ObjectID = "7Ki-RL-qor"; */
+"7Ki-RL-qor.text" = "CURA";
+
+/* Class = "UILabel"; text = "100гр"; ObjectID = "8d3-K1-dSe"; */
+"8d3-K1-dSe.text" = "100гр";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "8gz-Ea-D0K"; */
+"8gz-Ea-D0K.text" = "0";
+
+/* Class = "UINavigationItem"; title = "COVIDStocks"; ObjectID = "9dx-9A-RUc"; */
+"9dx-9A-RUc.title" = "COVIDStocks";
+
+/* Class = "UITabBarItem"; title = "Transfer"; ObjectID = "ADO-2n-069"; */
+"ADO-2n-069.title" = "Modi di trasmissione";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "B3o-3v-zm1"; */
+"B3o-3v-zm1.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "COVID-2019"; ObjectID = "CSP-n7-3Sw"; */
+"CSP-n7-3Sw.title" = "COVID-2019";
+
+/* Class = "UILabel"; text = "Labored Breathing"; ObjectID = "FTe-eD-xPY"; */
+"FTe-eD-xPY.text" = "Labored Breathing";
+
+/* Class = "UILabel"; text = " 50"; ObjectID = "Jrk-8d-LuY"; */
+"Jrk-8d-LuY.text" = " 50";
+
+/* Class = "UITabBarItem"; title = "Statystics"; ObjectID = "Kly-St-cu3"; */
+"Kly-St-cu3.title" = "statistica";
+
+/* Class = "UILabel"; text = " 50"; ObjectID = "Qf3-OV-j1J"; */
+"Qf3-OV-j1J.text" = " 50";
+
+/* Class = "UILabel"; text = "52 каллорий"; ObjectID = "RaL-eh-gpT"; */
+"RaL-eh-gpT.text" = "52 каллорий";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "S61-EH-hLv"; */
+"S61-EH-hLv.text" = "Label";
+
+/* Class = "UILabel"; text = "COUNTRY"; ObjectID = "b9q-b4-uYL"; */
+"b9q-b4-uYL.text" = "PAESE";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "eXu-gV-tzf"; */
+"eXu-gV-tzf.text" = "Label";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "fZ5-oO-o6p"; */
+"fZ5-oO-o6p.title" = "Item";
+
+/* Class = "UILabel"; text = "Россия"; ObjectID = "h3f-Pm-yIs"; */
+"h3f-Pm-yIs.text" = "Россия";
+
+/* Class = "UITabBarItem"; title = "Symptoms"; ObjectID = "hcC-9w-PIK"; */
+"hcC-9w-PIK.title" = "sintomi";
+
+/* Class = "UILabel"; text = "3"; ObjectID = "hzY-RL-zaa"; */
+"hzY-RL-zaa.text" = "3";
+
+/* Class = "UILabel"; text = "Молоко"; ObjectID = "meL-L6-oLl"; */
+"meL-L6-oLl.text" = "Молоко";
+
+/* Class = "UILabel"; text = "50"; ObjectID = "mkO-nG-JU8"; */
+"mkO-nG-JU8.text" = "50";
+
+/* Class = "UINavigationItem"; title = "COVID-2019"; ObjectID = "rfT-oh-QhD"; */
+"rfT-oh-QhD.title" = "COVID-2019";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ruo-kr-o5R"; */
+"ruo-kr-o5R.text" = "Label";
+
+/* Class = "UILabel"; text = "2"; ObjectID = "sbq-Nl-nvt"; */
+"sbq-Nl-nvt.text" = "2";
+
+/* Class = "UISegmentedControl"; tak-Zc-BOM.segmentTitles[0] = "Food"; ObjectID = "tak-Zc-BOM"; */
+"tak-Zc-BOM.segmentTitles[0]" = "Food";
+
+/* Class = "UISegmentedControl"; tak-Zc-BOM.segmentTitles[1] = "Medicines"; ObjectID = "tak-Zc-BOM"; */
+"tak-Zc-BOM.segmentTitles[1]" = "Medicines";
+
+/* Class = "UISegmentedControl"; tak-Zc-BOM.segmentTitles[2] = "Household"; ObjectID = "tak-Zc-BOM"; */
+"tak-Zc-BOM.segmentTitles[2]" = "Household";
+
+/* Class = "UILabel"; text = "DIED"; ObjectID = "vb2-vw-42X"; */
+"vb2-vw-42X.text" = "MORTO";
+
+/* Class = "UITabBarItem"; title = "Defense"; ObjectID = "wmj-M9-RRt"; */
+"wmj-M9-RRt.title" = "protezione";

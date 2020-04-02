@@ -1,0 +1,32 @@
+/* 
+  Localization.strings
+  COVID2019Tracker
+
+  Created by Игорь Корабельников on 28.03.2020.
+  Copyright © 2020 Игорь Корабельников. All rights reserved.
+*/
+"laboredBreathing" = "Problemi respiratori";
+"Fever" = "Temperatura corporea calda";
+"Dry cough" = "Tosse secca";
+
+//MARK: Transfer
+"Sneezing" = "Starnuti";
+"Cough" = "Tosse";
+"DirtyHands" = "Mani non lavate";
+"Kisses" = "Baci";
+"Snot" = "Moccolo";
+
+//MARK: Defence
+"stayHome" = "Stai a casa";
+"WearFFP3" = "Indossa una maschera respiratoria FFP3";
+"WashHands" = "Lavarsi le mani";
+"DoNotTouchTheFace" = "Non toccarle il viso con le mani sporche";
+"WipeSmartphone" = "Pulisci il telefono con un tovagliolo";
+
+//MARK: Categories
+"SYMPTOMS" = "СIMPTOMY";
+"TRANSFER" = "MODI DI TRASFERIMENTO";
+"DEFENCE" = "PROTEZIONE";
+
+//MARK: WHO
+"WHO" = "Tutte le informazioni sono tratte da fonti ufficiali dell'Organizzazione mondiale della sanità";
