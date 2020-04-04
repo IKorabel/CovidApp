@@ -9,7 +9,6 @@
 import UIKit
 
 class Helpers: NSObject {
-    
     static func customNavigationBar() {
        let navigationBar = UINavigationBar.appearance()
        navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)

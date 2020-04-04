@@ -8,7 +8,4 @@
 
 import UIKit
 
-struct CoronavirusInformation {
-    var informationText: String
-    var informationImage: UIImage
-}
+

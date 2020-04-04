@@ -11,27 +11,18 @@ import UIKit
 var tabBarResult = 0
 var informationNumber = 0
 
-class CoronaInfoVC: UIViewController {
+class CoronavirusInfomationVC: UIViewController {
     @IBOutlet weak var coronaInfoTableView: UITableView!
-    
-    var coronaInfoTableViewData: [CoronavirusInformation] {
+    var coronavirusInfomation = CoronavirusInfomation()
+    var tabBar = TabBarController()
+    var coronaInfoTableViewData: [CoronavirusInformationCellData] {
         switch tabBarResult {
         case 1:
-            return [CoronavirusInformation(informationText: NSLocalizedString("laboredBreathing", comment: ""),         informationImage: #imageLiteral(resourceName: "lung 1"))
-                   ,CoronavirusInformation(informationText: NSLocalizedString("Fever", comment: ""), informationImage: #imageLiteral(resourceName: "heat 1")),
-                    CoronavirusInformation(informationText: NSLocalizedString("Dry cough", comment: ""), informationImage: #imageLiteral(resourceName: "cough 1"))]
+            return coronavirusInfomation.symptoms
         case 2:
-            return [CoronavirusInformation(informationText: NSLocalizedString("Sneezing", comment: ""), informationImage: #imageLiteral(resourceName: "cough-3 1")),
-                    CoronavirusInformation(informationText: NSLocalizedString("Cough", comment: ""), informationImage: #imageLiteral(resourceName: "cough 1")),
-                    CoronavirusInformation(informationText: NSLocalizedString("DirtyHands", comment: ""), informationImage: #imageLiteral(resourceName: "Group-1")),
-                    CoronavirusInformation(informationText: NSLocalizedString("Kisses", comment: ""), informationImage: #imageLiteral(resourceName: "kiss 1")),
-                    CoronavirusInformation(informationText: NSLocalizedString("Snot", comment: ""), informationImage: #imageLiteral(resourceName: "cough-2 1"))]
+            return coronavirusInfomation.spreadPaths
         case 3:
-            return [CoronavirusInformation(informationText: NSLocalizedString("stayHome", comment: ""), informationImage: #imageLiteral(resourceName: "living 1")),
-                    CoronavirusInformation(informationText: NSLocalizedString("WearFFP3", comment: ""), informationImage: #imageLiteral(resourceName: "medical-mask 1")),
-                    CoronavirusInformation(informationText: NSLocalizedString("WashHands", comment: ""), informationImage: #imageLiteral(resourceName: "hand-wash 1")),
-                    CoronavirusInformation(informationText: NSLocalizedString("DoNotTouchTheFace", comment: ""), informationImage: #imageLiteral(resourceName: "Group 6")),
-                    CoronavirusInformation(informationText: NSLocalizedString("WipeSmartphone", comment: ""), informationImage: UIImage(named: "Group 7")!)]
+            return coronavirusInfomation.precautions
         default:
             return []
         }
@@ -50,17 +41,14 @@ class CoronaInfoVC: UIViewController {
            return ""
         }
     }
-    var tabBar = TabBarController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-    override func viewWillAppear(_ animated: Bool) {
-        print(tabBarResult)
-    }
 }
 
-extension CoronaInfoVC: UITableViewDelegate, UITableViewDataSource {
+extension CoronavirusInfomationVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -97,13 +85,10 @@ extension CoronaInfoVC: UITableViewDelegate, UITableViewDataSource {
         label.textAlignment = .left
          return label
     }
+    
      func scrollViewDidScroll(_ scrollView: UIScrollView) {
         coronaInfoTableView.tableFooterView?.isHidden = true
     }
     
 }
 
-class CoronavirusInfomationCell: UITableViewCell {
-    @IBOutlet weak var coronavirusInfoLabel: UILabel!
-    @IBOutlet weak var coronavirusInfoImage: UIImageView!
-}

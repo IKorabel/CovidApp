@@ -24,7 +24,6 @@ class CasesInfo: Decodable {
 struct LocationData: Decodable {
     var coordinates: Coordinate
     var country: String
-    //var history: History
     var latest: Int
     var province: String
 }
@@ -37,3 +36,4 @@ struct Coordinate: Decodable {
 struct History: Codable {
     let history: [String: String]
 }
+
