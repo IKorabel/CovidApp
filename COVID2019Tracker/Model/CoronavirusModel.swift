@@ -16,7 +16,7 @@ class Coronavirus: Decodable {
     var recovered: CasesInfo
 }
 
-class CasesInfo: Decodable {
+struct CasesInfo: Decodable {
     var latest: Int
     var locations: [LocationData]
 }
