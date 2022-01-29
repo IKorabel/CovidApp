@@ -26,9 +26,13 @@
 "WipeSmartphone" = "Wischen Sie ihr Handy mit Serviette";
 
 //MARK: Categories
-"SYMPTOMS" = "SYMPTOME";
-"TRANSFER" = "ÜBERTRAGUNGSWEGE";
-"DEFENCE" = "SCHUTZ";
+"SYMPTOMS" = "Symptome";
+"TRANSFER" = "Übertragungswege";
+"DEFENCE" = "Schutz";
 
 //MARK: WHO
 "WHO" = "Alle informationen werden aus den offizielle Quellen von Weltgesundheitsorganisation genommen";
+
+"Confirmed" = "Bestätigt";
+"Dead" = "Gestorben";
+"Recovered" = "Erholt";

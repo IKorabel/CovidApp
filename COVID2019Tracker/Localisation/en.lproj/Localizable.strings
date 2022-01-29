@@ -25,10 +25,14 @@
 "WipeSmartphone" = "Wipe your smartphone with a cloth";
 
 //MARK: Categories
-"SYMPTOMS" = "SYMPTOMS";
-"TRANSFER" = "TRANSFER";
-"DEFENCE" = "DEFENSE";
+"SYMPTOMS" = "Symptoms";
+"TRANSFER" = "Transfer";
+"DEFENCE" = "Defense";
 
 //MARK: WHO
 "WHO" = "All information was taken from official sourses of the World Health Organisation";
 
+//MARK: MainStatistics Categories
+"Confirmed" = "Confirmed";
+"Dead" = "Dead";
+"Recovered" = "Recovered";

@@ -13,8 +13,8 @@ class Helpers {
        let navigationBar = UINavigationBar.appearance()
        navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
        navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-       navigationBar.barTintColor = UIColor.white
-       navigationBar.backgroundColor = UIColor.black
+       navigationBar.barTintColor = UIColor.blue
+       navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
        navigationBar.shadowImage = UIImage()
     }
 }

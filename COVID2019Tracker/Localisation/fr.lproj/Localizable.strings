@@ -26,9 +26,13 @@
 "WipeSmartphone" = "Essuyez votre smartphone avec un chiffon";
 
 // MARK: Catégories
-"SYMPTOMS" = "LES SYMPTÔMES";
-"TRANSFER" = "CHEMINS DE TRANSMISSION";
-"DEFENCE" = "PROTECTION";
+"SYMPTOMS" = "Les symptômes";
+"TRANSFER" = "Chemins de transmission";
+"DEFENCE" = "Protection";
 
 // MARQUE: QUI
 "WHO" = "Toutes les informations proviennent de sources officielles de l'Organisation mondiale de la santé";
+
+"Confirmed" = "Récupéré";
+"Dead" = "Mort";
+"Recovered" = "Récupéré";

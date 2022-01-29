@@ -24,9 +24,13 @@
 "WipeSmartphone" = "Limpie el teléfono con una servilleta";
 
 //MARK: Categories
-"SYMPTOMS" = "СIMPTOMY";
-"TRANSFER" = "MODOS DE TRANSFERENCIA";
-"DEFENCE" = "PROTECCIÓN";
+"SYMPTOMS" = "Cimptomy";
+"TRANSFER" = "Modos de transferencia";
+"DEFENCE" = "Protecciôn";
 
 //MARK: WHO
 "WHO" = "Toda la información se toma de fuentes oficiales de la Organización Mundial de la Salud";
+
+"Confirmed" = "Mejor";
+"Dead" = "Muerto";
+"Recovered" = "Recuperado";

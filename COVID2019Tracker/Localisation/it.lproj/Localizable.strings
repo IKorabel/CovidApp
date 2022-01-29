@@ -24,9 +24,13 @@
 "WipeSmartphone" = "Pulisci il telefono con un tovagliolo";
 
 //MARK: Categories
-"SYMPTOMS" = "СIMPTOMY";
-"TRANSFER" = "MODI DI TRASFERIMENTO";
-"DEFENCE" = "PROTEZIONE";
+"SYMPTOMS" = "Сimptomy";
+"TRANSFER" = "Modi di trasferimento";
+"DEFENCE" = "Protezione";
 
 //MARK: WHO
 "WHO" = "Tutte le informazioni sono tratte da fonti ufficiali dell'Organizzazione mondiale della sanità";
+
+"Confirmed" = "Confermato";
+"Dead" = "Morto";
+"Recovered" = "Recuperato";

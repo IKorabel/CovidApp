@@ -9,26 +9,26 @@
 import UIKit
 import MapKit
 
-class CoronavirusProvinceMapStatisticsVC: UIViewController {
+class RegionalAdditionalStatisticsViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var coronavirusMap: MKMapView!
     @IBOutlet weak var CountryProvinceTableView: UITableView!
     
-    var mapManager = MapManager()
+    var geoServices = GeoServices.shared
     var provinceData: ([LocationData?],[LocationData?],[LocationData?])?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSettings()
         navigationBar.title = provinceData?.0[0]?.country
-        mapManager.showPlaces(map: coronavirusMap, provinceData: provinceData)
-        mapManager.mapSettings(map: coronavirusMap)
+        geoServices.showPlaces(map: coronavirusMap, provinceData: provinceData)
+        geoServices.mapSettings(map: coronavirusMap)
     }
 
 }
 
 //MARK: TableView
-extension CoronavirusProvinceMapStatisticsVC: UITableViewDelegate, UITableViewDataSource {
+extension RegionalAdditionalStatisticsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return provinceData!.0.count
@@ -53,7 +53,7 @@ extension CoronavirusProvinceMapStatisticsVC: UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        mapManager.showLocation(coronavirusMap: coronavirusMap, place: provinceData?.0[indexPath.row])
+        geoServices.showLocation(coronavirusMap: coronavirusMap, place: provinceData?.0[indexPath.row])
     }
     
     func tableViewSettings() {
@@ -64,7 +64,7 @@ extension CoronavirusProvinceMapStatisticsVC: UITableViewDelegate, UITableViewDa
 }
 
 //MapViewDelegate
-extension CoronavirusProvinceMapStatisticsVC: MKMapViewDelegate {
+extension RegionalAdditionalStatisticsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         var coronavirusAnnotationView = coronavirusMap.dequeueReusableAnnotationView(withIdentifier: "coronavirusAnnotation")
@@ -74,3 +74,4 @@ extension CoronavirusProvinceMapStatisticsVC: MKMapViewDelegate {
         return coronavirusAnnotationView
      }
 }
+
