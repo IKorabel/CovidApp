@@ -15,6 +15,7 @@ class CoronavirusInfomationVC: UIViewController {
     @IBOutlet weak var coronaInfoTableView: UITableView!
     var coronavirusInfomation = CoronavirusInfomation()
     var tabBar = TabBarController()
+    
     var coronaInfoTableViewData: [CoronavirusInformationCellData] {
         switch tabBarResult {
         case 1:
@@ -44,7 +45,13 @@ class CoronavirusInfomationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        implementTableView()
         // Do any additional setup after loading the view.
+    }
+    
+    func implementTableView() {
+        coronaInfoTableView.backgroundColor = UIColor.black
+        coronaInfoTableView.tableFooterView = UIView()
     }
 }
 
@@ -59,8 +66,6 @@ extension CoronavirusInfomationVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.backgroundColor = UIColor.black
-        tableView.tableFooterView = UIView()
         let cell = tableView.dequeueReusableCell(withIdentifier: "coronavirusInfoCell") as! CoronavirusInfomationCell
         cell.coronavirusInfoImage.image = coronaInfoTableViewData[indexPath.row].informationImage
         cell.coronavirusInfoLabel.text = coronaInfoTableViewData[indexPath.row].informationText
@@ -82,7 +87,7 @@ extension CoronavirusInfomationVC: UITableViewDelegate, UITableViewDataSource {
          label.font = label.font.withSize(8)
          label.numberOfLines = 0
          label.text = "         \(NSLocalizedString("WHO", comment: ""))"
-        label.textAlignment = .left
+         label.textAlignment = .left
          return label
     }
     
