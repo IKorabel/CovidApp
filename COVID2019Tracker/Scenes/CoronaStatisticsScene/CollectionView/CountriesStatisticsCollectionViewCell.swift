@@ -29,8 +29,7 @@ class CountriesStatisticsCollectionViewCell: UICollectionViewCell {
     
     func setShape() {
         layer.cornerRadius = 20
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.systemGray.cgColor
+        backgroundColor = .white
     }
     
 }

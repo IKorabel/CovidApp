@@ -9,7 +9,6 @@
 import UIKit
 
 class MainStatisticsViewController: UIViewController {
-    @IBOutlet weak var covidTableView: UITableView!
     @IBOutlet weak var mainStatisticsCollectionView: UICollectionView!
     
     var coronavirusStatistic: CovidStatistics?
@@ -18,8 +17,7 @@ class MainStatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        implementTableView()
-        implementCollectionView()
+        setSettingsToView()
         requestCovidData()
     }
     
@@ -27,36 +25,43 @@ class MainStatisticsViewController: UIViewController {
         APIService.shared.requestCovidData { [self] loadedCovidStatistics in
             guard let covidStatistics = loadedCovidStatistics else { return }
             coronavirusStatistic = covidStatistics
-            DispatchQueue.main.async { covidTableView.reloadData() }
             DispatchQueue.main.async { mainStatisticsCollectionView.reloadData() }
         }
     }
     
-    func implementTableView() {
-        covidTableView.delegate = self
-        covidTableView.dataSource = self
-        covidTableView.separatorStyle = .singleLine
+    func setSettingsToView() {
+        view.backgroundColor = .secondarySystemBackground
+        implementCollectionView()
     }
     
     func implementCollectionView() {
         mainStatisticsCollectionView.delegate = self
         mainStatisticsCollectionView.dataSource = self
         mainStatisticsCollectionView.collectionViewLayout = createCompositionalLayout()
+        mainStatisticsCollectionView.backgroundColor = .clear
+        mainStatisticsCollectionView.register(ASCollectionViewHeader.self,
+                                              forSupplementaryViewOfKind: ASCollectionViewHeader.reuseIdentifier,
+                                              withReuseIdentifier: ASCollectionViewHeader.reuseIdentifier)
     }
     
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             switch sectionNumber {
-            case 0:
-                let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33),
-                                                        heightDimension: .fractionalHeight(0.33))
+            case 0...1:
+                let layoutSize = NSCollectionLayoutSize(widthDimension: .absolute(80),
+                                                        heightDimension: .absolute(150))
                 let item = NSCollectionLayoutItem(layoutSize: layoutSize)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
+                item.contentInsets.trailing = 10
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(180))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
                 let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .groupPaging
+                section.contentInsets.leading = 10
+                section.contentInsets.top = 10
+                section.boundarySupplementaryItems = [
+                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: ASCollectionViewHeader.reuseIdentifier, alignment: .topLeading)
+                ]
                 return section
-            case 1:
+            case 2:
                 let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .absolute(150))
                 let item = NSCollectionLayoutItem(layoutSize: layoutSize)
@@ -64,48 +69,17 @@ class MainStatisticsViewController: UIViewController {
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(600))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets.leading = 5
-                section.contentInsets.trailing = 5
+                section.contentInsets.leading = 10
+                section.contentInsets.trailing = 10
                 section.contentInsets.top = 5
+                section.boundarySupplementaryItems = [
+                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: ASCollectionViewHeader.reuseIdentifier, alignment: .topLeading)
+                ]
                 return section
             default:
                 return nil
             }
         }
-    }
-}
-
-
- 
-
-//MARK: TableView
-extension MainStatisticsViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let covidStatistics = coronavirusStatistic else { return 0 }
-        return covidStatistics.countries.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.row == 0 {
-            guard let worldStatisticsCell = tableView.dequeueReusableCell(withIdentifier: "mainInfoCell") as? CovidMainInfoTableViewCell else { return UITableViewCell() }
-            guard let globalStatistics = coronavirusStatistic?.global else { return worldStatisticsCell }
-           worldStatisticsCell.setMainInformation(globalStatistics: globalStatistics)
-          return worldStatisticsCell
-        } else {
-         guard let countryStatisticsCell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CovidTableViewCell else {
-                return UITableViewCell()
-         }
-        guard let countries = coronavirusStatistic?.countries else { return countryStatisticsCell }
-        countryStatisticsCell.setInformation(country: countries[indexPath.row])
-         return countryStatisticsCell
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let index = covidTableView.indexPathForSelectedRow else { return }
-        guard segue.identifier == "showDetail" else { return }
-        guard let detailVC = segue.destination as? RegionalAdditionalStatisticsViewController else { return }
     }
 }
 
@@ -132,9 +106,9 @@ extension MainStatisticsViewController: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return 3
-        case 1:
+        case 0...1:
+            return 2
+        case 2:
             guard let countries = coronavirusStatistic?.countries else { return 1 }
             return countries.count
         default:
@@ -142,16 +116,30 @@ extension MainStatisticsViewController: UICollectionViewDelegate, UICollectionVi
         }
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let sectionHeaders = ["Today","World", NSLocalizedString("COUNTRIES", comment: "headerMain2Section")]
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ASCollectionViewHeader.reuseIdentifier, for: indexPath) as? ASCollectionViewHeader else {
+        return UICollectionReusableView()
+        }
+        print("header")
+        header.setHeader(title: sectionHeaders[indexPath.section], buttonImage: nil)
+        return header
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
-        case 0:
+        case 0...1:
         let cellIdentifier = MainStatisticsVCConstants.worldwideStatisticsCellIdenntifier.rawValue
        guard let worldwideStatisticsCell = collectionView.dequeueReusableCell (withReuseIdentifier: cellIdentifier, for: indexPath) as? WorldwideStatisticsCollectionViewCell
             else { return UICollectionViewCell() }
         guard let statistics = coronavirusStatistic?.global else { return worldwideStatisticsCell }
         worldwideStatisticsCell.setCategoryInformation(information: statistics, indexPath: indexPath)
         return worldwideStatisticsCell
-        case 1:
+        case 2:
         let countriesCellId = MainStatisticsVCConstants.countriesStatisticsCell.rawValue
         guard let countriesCell = collectionView.dequeueReusableCell(withReuseIdentifier: countriesCellId, for: indexPath) as? CountriesStatisticsCollectionViewCell else {
             print("incorrect id")

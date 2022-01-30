@@ -24,7 +24,8 @@ class CoronavirusInfomationCell: UITableViewCell {
     }
     
     func configureCell() {
-        coronavirusInfoLabel.textColor = .systemGray
+        coronavirusInfoLabel.textColor = .label
+        backgroundColor = .white
     }
 }
 

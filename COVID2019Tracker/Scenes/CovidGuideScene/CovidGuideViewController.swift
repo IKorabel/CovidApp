@@ -34,6 +34,12 @@ class CovidGuideViewController: UIViewController {
     func configureUIElements() {
         configureNavigationBar()
         implementTableView()
+        viewsSettings()
+    }
+    
+    func viewsSettings() {
+        coronaInfoTableView.backgroundColor = .clear
+        view.backgroundColor = .secondarySystemBackground
     }
     
     func configureNavigationBar() {
@@ -43,6 +49,7 @@ class CovidGuideViewController: UIViewController {
     
     func implementTableView() {
         coronaInfoTableView.tableFooterView = UIView()
+        coronaInfoTableView.layer.cornerRadius = 20
     }
 }
 

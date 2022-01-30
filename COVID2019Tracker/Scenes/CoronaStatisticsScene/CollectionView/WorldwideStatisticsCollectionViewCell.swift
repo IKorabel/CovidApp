@@ -21,17 +21,21 @@ class WorldwideStatisticsCollectionViewCell: UICollectionViewCell {
     
     private func setShape() {
         layer.cornerRadius = 20
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.systemGray.cgColor
+        backgroundColor = .white
     }
     
     func setCategoryInformation(information: Global, indexPath: IndexPath) {
-        guard let statisticsCategory = StatisticsCategory(rawValue: indexPath.row) else { return }
+        guard let rawValue = Int("\(indexPath.section)\(indexPath.row)") else {
+        print("Не удалось преобразовать")
+        return
+        }
+        guard let statisticsCategory = StatisticsCategory(rawValue: rawValue) else { return }
         let amount = "\(statisticsCategory.defineKindOfIndormationDependsOnIndex(information: information))"
         let categoryColor = statisticsCategory.categoryColor
+        categoryAmountLael.textColor = statisticsCategory.amountLabelTextColor
         categoryImage.tintColor = categoryColor
         categoryNameLabel.textColor = categoryColor
-        categoryAmountLael.text = amount
+        categoryAmountLael.text = "\(amount)\n \(NSLocalizedString("People", comment: "amountOfPeople"))"
         categoryImage.image = statisticsCategory.iconForCategoryImage
         categoryNameLabel.text = statisticsCategory.categoryTitle
     }
@@ -42,39 +46,49 @@ class WorldwideStatisticsCollectionViewCell: UICollectionViewCell {
 extension WorldwideStatisticsCollectionViewCell {
     
     enum StatisticsCategory: Int {
-        case deaths = 0
-        case confirmed = 1
-        case recovered = 2
+        case deaths = 10
+        case confirmed = 11
+        case recovered = 12
+        case newDeaths = 00
+        case newConfirmed = 01
+        case newRecovered = 02
         
         var categoryColor: UIColor {
             switch self {
-            case .confirmed:
+            case .confirmed, .newConfirmed:
                 return .systemOrange
-            case .deaths:
+            case .deaths, .newDeaths:
                 return .systemPink
-            case .recovered:
+            case .recovered, .newRecovered:
                 return .systemBlue
+            }
+        }
+        
+        var amountLabelTextColor: UIColor {
+            switch self {
+            case .deaths,.confirmed,.recovered: return .label
+            case .newDeaths,.newConfirmed,.newRecovered: return .systemBlue
             }
         }
                 
         var categoryTitle: String {
             switch self {
-            case .deaths:
+            case .deaths, .newDeaths:
                 return NSLocalizedString("Dead", comment: "")
-            case .confirmed:
+            case .confirmed, .newConfirmed:
                 return NSLocalizedString("Confirmed", comment: "")
-            case .recovered:
+            case .recovered, .newRecovered:
                 return NSLocalizedString("Recovered", comment: "")
             }
         }
         
         var iconForCategoryImage: UIImage {
             switch self {
-            case .confirmed:
+            case .confirmed, .newConfirmed:
                 return UIImage(systemName: "facemask.fill")!
-            case .deaths:
+            case .deaths, .newDeaths:
                 return UIImage(systemName: "heart.slash")!
-            case .recovered:
+            case .recovered, .newRecovered:
                 return UIImage(systemName: "heart.text.square.fill")!
             }
         }
@@ -85,14 +99,20 @@ extension WorldwideStatisticsCollectionViewCell {
             return imageView
         }
         
-        func defineKindOfIndormationDependsOnIndex(information: Global) -> Int {
+        func defineKindOfIndormationDependsOnIndex(information: Global) -> String {
             switch self {
             case .deaths:
-                return information.totalDeaths
+                return "\(information.totalDeaths)"
             case .confirmed:
-                return information.totalConfirmed
+                return "\(information.totalConfirmed)"
             case .recovered:
-                return information.totalRecovered
+                return "\(information.totalRecovered)"
+            case .newDeaths:
+                return "+\(information.newDeaths)"
+            case .newConfirmed:
+                return "+\(information.newConfirmed)"
+            case .newRecovered:
+                return "+\(information.newRecovered)"
             }
         }
     }
