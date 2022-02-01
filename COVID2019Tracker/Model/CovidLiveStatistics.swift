@@ -14,7 +14,7 @@ struct CovidLiveStatistic: Codable {
     let id: String
     let country: String
     let countryCode: String
-    let province: String
+    var province: String
     let city: String
     let cityCode: String
     let lat: String
@@ -24,6 +24,7 @@ struct CovidLiveStatistic: Codable {
     let recovered: Int
     let active: Int
     let date: String
+    var dangerLevel: DangerLevel?
 
     enum CodingKeys: String, CodingKey {
         case id = "ID"
@@ -48,5 +49,61 @@ extension CovidLiveStatistic {
         guard !lat.isEmpty, !lon.isEmpty else { return nil }
         guard let latitude = Double(lat), let longitude = Double(lon) else { return nil }
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+}
+
+extension Array where Element == CovidLiveStatistic {
+    
+    func splitByRegions() -> [CovidLiveStatistic] {
+        var countryStatisticsSplittedByProvinces = [CovidLiveStatistic]()
+        let allProvinces = self.map({$0.province}).uniqued()
+        if allProvinces.isEmpty {
+            guard let lastElement = self.last else { return self }
+            countryStatisticsSplittedByProvinces.append(lastElement)
+        } else {
+            allProvinces.forEach { province in
+                guard let filteredByRegion = self.filter({$0.province == province}).last else { return }
+                countryStatisticsSplittedByProvinces.append(filteredByRegion)
+            }
+        }
+        let categorizedSortedArray = countryStatisticsSplittedByProvinces.categorizeByDangerLevel().sorted(by: {$0.confirmed > $1.confirmed})
+        return categorizedSortedArray
+    }
+    
+    func categorizeByDangerLevel() -> [CovidLiveStatistic] {
+        let confirmedCaseSum = self.map({$0.confirmed}).reduce(0, +)
+        let confirmedCasesAverage = confirmedCaseSum / self.count
+        self.forEach { statistic in
+            var statistic = statistic
+            statistic.dangerLevel = defineDangerLevel(casesAmount: statistic.confirmed, average: confirmedCasesAverage)
+        }
+        return self
+    }
+    
+    func defineDangerLevel(casesAmount: Int, average: Int) -> DangerLevel {
+        if casesAmount > average {
+            return .high
+        } else if casesAmount <= average && casesAmount >= average / 2 {
+            return .medium
+        } else if casesAmount <= average && casesAmount < average / 2 {
+            return .low
+        }
+        return .medium
+    }
+    
+}
+
+enum DangerLevel {
+    case high,medium,low
+    
+    var color: UIColor {
+        switch self {
+        case .high:
+            return .systemRed
+        case .medium:
+            return .systemYellow
+        case .low:
+            return .systemGreen
+        }
     }
 }

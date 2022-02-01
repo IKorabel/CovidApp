@@ -20,3 +20,5 @@ extension Formatter {
 extension Numeric {
     var formattedWithSeparator: String { Formatter.withSeparator.string(for: self) ?? "" }
 }
+
+

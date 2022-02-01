@@ -25,6 +25,7 @@ class MainStatisticsViewController: UIViewController {
         APIService.shared.requestCovidData(link: .summaryStatisticsLink) { [self] loadedCovidStatistics in
             guard let covidStatistics = loadedCovidStatistics as? CovidStatistics else { return }
             coronavirusStatistic = covidStatistics
+            coronavirusStatistic?.countries.sort(by: {$0.totalConfirmed > $1.totalConfirmed})
             DispatchQueue.main.async { mainStatisticsCollectionView.reloadData() }
         }
     }
@@ -146,12 +147,10 @@ extension MainStatisticsViewController: UICollectionViewDelegate, UICollectionVi
         worldwideStatisticsCell.setCategoryInformation(information: statistics, indexPath: indexPath)
         return worldwideStatisticsCell
         case 2:
+            
         let countriesCellId = MainStatisticsVCConstants.countriesStatisticsCell.rawValue
-        guard let countriesCell = collectionView.dequeueReusableCell(withReuseIdentifier: countriesCellId, for: indexPath) as? CountriesStatisticsCollectionViewCell else {
-            print("incorrect id")
-            return UICollectionViewCell()
-        }
-            countriesCell.setCountry(country: coronavirusStatistic?.countries[indexPath.row])
+        guard let countriesCell = collectionView.dequeueReusableCell(withReuseIdentifier: countriesCellId, for: indexPath) as? CountriesStatisticsCollectionViewCell else { return UICollectionViewCell() }
+        countriesCell.setCountry(country: coronavirusStatistic?.countries[indexPath.row])
         return countriesCell
         default:
             return UICollectionViewCell()

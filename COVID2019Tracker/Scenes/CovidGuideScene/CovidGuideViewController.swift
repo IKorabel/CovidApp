@@ -70,13 +70,17 @@ extension CovidGuideViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let label = UILabel()
-         label.textColor = .systemGray
-         label.font = label.font.withSize(8)
-         label.numberOfLines = 0
-         label.text = "         \(NSLocalizedString("WHO", comment: ""))"
-         label.textAlignment = .left
-         return label
+//        let label = UILabel()
+//         label.textColor = .systemGray
+//         label.font = label.font.withSize(8)
+//         label.numberOfLines = 0
+//         label.text = "         \(NSLocalizedString("WHO", comment: ""))"
+//         label.textAlignment = .left
+//
+//         let view = UIView()
+//         view.addSubview(label)
+//         return view
+        return UIView()
     }
     
      func scrollViewDidScroll(_ scrollView: UIScrollView) {

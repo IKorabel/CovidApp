@@ -33,15 +33,9 @@ class GeoServices {
         completion(inoutCountries)
     }
     
-    func mapSettings(map: MKMapView) {
-        if #available(iOS 13.0, *) {
-            map.overrideUserInterfaceStyle = .dark
-        }
-    }
-    
-    func showPlaces(map: MKMapView,provinceData: ([LocationData?],[LocationData?],[LocationData?])?) {
+    func showPlaces(map: MKMapView,provinceData: [CovidLiveStatistic]?) {
         guard let provinceData = provinceData else { return }
-        //for place in provinceData.0 { showLocation(coronavirusMap: map, place: place) }
+        provinceData.forEach({ showLocation(coronavirusMap: map, coordinate: $0.convertCoordinatesToCLLocationCoordinate())})
     }
     
     func showLocation(coronavirusMap: MKMapView, coordinate: CLLocationCoordinate2D?) {
@@ -50,8 +44,8 @@ class GeoServices {
            let region = MKCoordinateRegion(center: coordinate, span: span)
            let annotation = MKPointAnnotation()
            annotation.coordinate = coordinate
-          // annotation.title = place.province
-        //   annotation.subtitle = "Infected: \(place.latest)"
+           annotation.title = ""
+           annotation.subtitle = "Infected: 0"
            coronavirusMap.setRegion(region, animated: true)
            coronavirusMap.addAnnotation(annotation)
            coronavirusMap.selectAnnotation(annotation, animated: true)

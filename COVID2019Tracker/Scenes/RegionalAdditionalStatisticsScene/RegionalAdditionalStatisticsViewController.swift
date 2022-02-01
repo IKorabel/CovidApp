@@ -22,12 +22,10 @@ class RegionalAdditionalStatisticsViewController: UIViewController {
         super.viewDidLoad()
         requestRegionalStatistics()
         implementUIElements()
-        
     }
     
     func showOnMap() {
-       // geoServices.showPlaces(map: coronavirusMap, provinceData: provinceData)
-        geoServices.mapSettings(map: coronavirusMap)
+        geoServices.showPlaces(map: coronavirusMap, provinceData: provinceStatistics)
     }
     
     func implementUIElements() {
@@ -70,8 +68,9 @@ class RegionalAdditionalStatisticsViewController: UIViewController {
         guard let countryCode = countryCode else { return }
         APIService.shared.requestCovidData(link: .countryLiveStatisticsLink(countryCode: countryCode)) { [self] loadedData in
             guard let countryStatistics = loadedData as? [CovidLiveStatistic] else { return }
-            navigationBar.title = getTheCountryName()
-            self.provinceStatistics = countryStatistics
+            title = getTheCountryName()
+            self.provinceStatistics = countryStatistics.splitByRegions()
+            showOnMap()
             DispatchQueue.main.async { provinceCollectionView.reloadData() }
         }
     }
@@ -83,42 +82,22 @@ class RegionalAdditionalStatisticsViewController: UIViewController {
 
 }
 
-//MARK: TableView
-extension RegionalAdditionalStatisticsViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return provinceStatistics?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "provinceCell") as! CoronavirusProvinceMapStatiticsTableViewCell
-        cell.backgroundColor = UIColor.black
-        guard let provinceStatistics = provinceStatistics else { return cell }
-        cell.provinceName.text = provinceStatistics.first?.province
-//        cell.infected.text = "\(provinceData!.0[indexPath.row]!.latest)"
-//        cell.died.text =  "\(provinceData!.1[indexPath.row]!.latest)"
-//        cell.recovered.text =  "\(provinceData!.2[indexPath.row]!.latest)"
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // geoServices.showLocation(coronavirusMap: coronavirusMap, place: provinceData?.0[indexPath.row])
-    }
-    
-}
-
 //MapViewDelegate
 extension RegionalAdditionalStatisticsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        var coronavirusAnnotationView = coronavirusMap.dequeueReusableAnnotationView(withIdentifier: "coronavirusAnnotation")
-        coronavirusAnnotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "coronavirusAnnotation")
-        coronavirusAnnotationView?.canShowCallout = true
-        coronavirusAnnotationView?.image = UIImage(named: "PinClipart.com_video-editing-clip-art_2180392 — копия")
+        var coronavirusAnnotationView = coronavirusMap.dequeueReusableAnnotationView(withIdentifier: "provinceAnnotation")
+        if coronavirusAnnotationView == nil {
+            coronavirusAnnotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "provinceAnnotation")
+            coronavirusAnnotationView?.canShowCallout = true
+            let circle = UIImage(systemName:"circle.fill")!.withTintColor(.systemRed)
+            let size = CGSize(width: 30, height: 30)
+            coronavirusAnnotationView!.image = UIGraphicsImageRenderer(size:size).image {
+                _ in circle.draw(in:CGRect(origin:.zero, size:size))
+            }
+        } else {
+            coronavirusAnnotationView?.annotation = annotation
+        }
         return coronavirusAnnotationView
      }
 }

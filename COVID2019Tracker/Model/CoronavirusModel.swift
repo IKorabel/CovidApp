@@ -61,7 +61,7 @@ struct CovidStatistics: Codable {
     let id: String
     let message: String
     let global: Global
-    let countries: [Country]
+    var countries: [Country]
     let date: String
     
     enum CodingKeys: String, CodingKey {

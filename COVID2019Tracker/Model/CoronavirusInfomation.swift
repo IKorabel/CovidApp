@@ -10,15 +10,19 @@ import UIKit
 
 class CoronavirusInfomation {
     var symptoms = [CoronavirusInformationCellData(informationText: NSLocalizedString("laboredBreathing", comment: ""),                        informationImage: UIImage(systemName: "lungs.fill")!)
-    ,CoronavirusInformationCellData(informationText: NSLocalizedString("Fever", comment: ""), informationImage: #imageLiteral(resourceName: "heat 1")),
-     CoronavirusInformationCellData(informationText: NSLocalizedString("Dry cough", comment: ""), informationImage: #imageLiteral(resourceName: "cough 1"))]
+    ,CoronavirusInformationCellData(informationText: NSLocalizedString("Fever", comment: ""), informationImage: UIImage(systemName: "thermometer")!),
+                    CoronavirusInformationCellData(informationText: NSLocalizedString("Dry cough", comment: ""), informationImage: UIImage(named: "icons8-coughing-60")!)]
     
-    var spreadPaths = [CoronavirusInformationCellData(informationText: NSLocalizedString("Sneezing", comment: ""), informationImage: #imageLiteral(resourceName: "cough-3 1")),
-    CoronavirusInformationCellData(informationText: NSLocalizedString("Cough", comment: ""), informationImage: #imageLiteral(resourceName: "cough 1")),
+    var spreadPaths = [CoronavirusInformationCellData(informationText: NSLocalizedString("Sneezing", comment: ""),
+                                                      informationImage: UIImage(named: "icons8-чихать-60")!),
+    CoronavirusInformationCellData(informationText: NSLocalizedString("Cough", comment: ""),
+                                   informationImage: UIImage(named: "icons8-coughing-61")!),
     CoronavirusInformationCellData(informationText: NSLocalizedString("DirtyHands", comment: ""),
                                    informationImage: UIImage(systemName: "hand.raised.fill")!),
-    CoronavirusInformationCellData(informationText: NSLocalizedString("Kisses", comment: ""), informationImage: #imageLiteral(resourceName: "kiss 1")),
-    CoronavirusInformationCellData(informationText: NSLocalizedString("Snot", comment: ""), informationImage: #imageLiteral(resourceName: "cough-2 1"))]
+    CoronavirusInformationCellData(informationText: NSLocalizedString("Kisses", comment: ""),
+                                   informationImage: UIImage(named: "icons8-kiss-_-*-60")!),
+    CoronavirusInformationCellData(informationText: NSLocalizedString("Snot", comment: ""),
+                                   informationImage: UIImage(named: "icons8-snot-64")!)]
     
     var precautions = [
     CoronavirusInformationCellData(informationText: NSLocalizedString("stayHome", comment: ""),
