@@ -16,10 +16,26 @@ class CountriesStatisticsCollectionViewCell: UICollectionViewCell {
     
     func setCountry(country: Country?) {
         guard let country = country else { return }
-        countryNameLabel.text = country.country
-        numberOfDeadLabel.text = "\(country.totalDeaths)"
-        numberOfInfectedLabel.text = "\(country.totalConfirmed)"
-        numberOfRecoveredLabel.text = "\(country.totalRecovered)"
+        setInformation(regionName: country.country,
+                       numberOfDead: country.totalDeaths.formattedWithSeparator,
+                       numberOfInfected: country.totalConfirmed.formattedWithSeparator,
+                       numberOfRecovered: country.totalRecovered.formattedWithSeparator)
+    }
+    
+    func setProvince(province: CovidLiveStatistic?) {
+        guard let province = province else { return }
+        let provinceName = province.province.isEmpty ? province.country : province.province
+        setInformation(regionName: provinceName,
+                       numberOfDead: province.deaths.formattedWithSeparator,
+                       numberOfInfected: province.confirmed.formattedWithSeparator,
+                       numberOfRecovered: province.recovered.formattedWithSeparator)
+    }
+    
+    func setInformation(regionName: String, numberOfDead: String, numberOfInfected: String, numberOfRecovered: String) {
+        countryNameLabel.text = regionName
+        numberOfDeadLabel.text = numberOfDead
+        numberOfInfectedLabel.text = numberOfInfected
+        numberOfRecoveredLabel.text = numberOfRecovered
     }
     
     override func awakeFromNib() {

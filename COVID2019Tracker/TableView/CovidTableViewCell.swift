@@ -14,13 +14,13 @@ class CovidTableViewCell: UITableViewCell {
     @IBOutlet weak var deadLabel: UILabel!
     @IBOutlet weak var recoveredLabel: UILabel!
     
-    func setInformation(country: Country?) {
-        guard let country = country else { return }
-        regionLabel.text = country.country
-        infectedLabel.text = "\(country.totalConfirmed)"
-        deadLabel.text = "\(country.totalDeaths)"
-        recoveredLabel.text = "\(country.totalRecovered)"
+    func setInformation(regionName: String, infectedAmount: String, deadAmount: String, recoveredAmount: String) {
+        regionLabel.text = regionName
+        infectedLabel.text = infectedAmount
+        deadLabel.text = deadAmount
+        recoveredLabel.text = recoveredAmount
     }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

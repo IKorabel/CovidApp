@@ -41,19 +41,17 @@ class GeoServices {
     
     func showPlaces(map: MKMapView,provinceData: ([LocationData?],[LocationData?],[LocationData?])?) {
         guard let provinceData = provinceData else { return }
-        for place in provinceData.0 { showLocation(coronavirusMap: map, place: place) }
+        //for place in provinceData.0 { showLocation(coronavirusMap: map, place: place) }
     }
     
-    func showLocation(coronavirusMap: MKMapView, place: LocationData?) {
-           guard let place = place else { return }
+    func showLocation(coronavirusMap: MKMapView, coordinate: CLLocationCoordinate2D?) {
+           guard let coordinate = coordinate else { return }
            let span = MKCoordinateSpan(latitudeDelta: 50, longitudeDelta: 50)
-           let coordinates = CLLocationCoordinate2D(latitude: Double(place.coordinates.lat) ?? 0,
-                                                    longitude: Double(place.coordinates.long) ?? 0)
-           let region = MKCoordinateRegion(center: coordinates, span: span)
+           let region = MKCoordinateRegion(center: coordinate, span: span)
            let annotation = MKPointAnnotation()
-           annotation.coordinate = coordinates
-           annotation.title = place.province
-           annotation.subtitle = "Infected: \(place.latest)"
+           annotation.coordinate = coordinate
+          // annotation.title = place.province
+        //   annotation.subtitle = "Infected: \(place.latest)"
            coronavirusMap.setRegion(region, animated: true)
            coronavirusMap.addAnnotation(annotation)
            coronavirusMap.selectAnnotation(annotation, animated: true)

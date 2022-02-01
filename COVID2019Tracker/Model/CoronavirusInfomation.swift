@@ -15,7 +15,8 @@ class CoronavirusInfomation {
     
     var spreadPaths = [CoronavirusInformationCellData(informationText: NSLocalizedString("Sneezing", comment: ""), informationImage: #imageLiteral(resourceName: "cough-3 1")),
     CoronavirusInformationCellData(informationText: NSLocalizedString("Cough", comment: ""), informationImage: #imageLiteral(resourceName: "cough 1")),
-    CoronavirusInformationCellData(informationText: NSLocalizedString("DirtyHands", comment: ""), informationImage: #imageLiteral(resourceName: "Group-1")),
+    CoronavirusInformationCellData(informationText: NSLocalizedString("DirtyHands", comment: ""),
+                                   informationImage: UIImage(systemName: "hand.raised.fill")!),
     CoronavirusInformationCellData(informationText: NSLocalizedString("Kisses", comment: ""), informationImage: #imageLiteral(resourceName: "kiss 1")),
     CoronavirusInformationCellData(informationText: NSLocalizedString("Snot", comment: ""), informationImage: #imageLiteral(resourceName: "cough-2 1"))]
     

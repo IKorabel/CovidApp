@@ -22,8 +22,8 @@ class MainStatisticsViewController: UIViewController {
     }
     
     func requestCovidData() {
-        APIService.shared.requestCovidData { [self] loadedCovidStatistics in
-            guard let covidStatistics = loadedCovidStatistics else { return }
+        APIService.shared.requestCovidData(link: .summaryStatisticsLink) { [self] loadedCovidStatistics in
+            guard let covidStatistics = loadedCovidStatistics as? CovidStatistics else { return }
             coronavirusStatistic = covidStatistics
             DispatchQueue.main.async { mainStatisticsCollectionView.reloadData() }
         }
@@ -42,6 +42,12 @@ class MainStatisticsViewController: UIViewController {
         mainStatisticsCollectionView.register(ASCollectionViewHeader.self,
                                               forSupplementaryViewOfKind: ASCollectionViewHeader.reuseIdentifier,
                                               withReuseIdentifier: ASCollectionViewHeader.reuseIdentifier)
+    }
+    
+    func makeSegueToRegionalVC(countryCodeToPass: String) {
+        guard let regionalStatisticsVC = storyboard?.instantiateViewController(withIdentifier: "RegionalAdditionalStatisticsViewController") as? RegionalAdditionalStatisticsViewController else { return }
+        regionalStatisticsVC.countryCode = countryCodeToPass
+        navigationController?.pushViewController(regionalStatisticsVC, animated: true)
     }
     
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -150,6 +156,14 @@ extension MainStatisticsViewController: UICollectionViewDelegate, UICollectionVi
         default:
             return UICollectionViewCell()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let countries = coronavirusStatistic?.countries else { return }
+        guard indexPath.section == 2 else { return }
+        let countryCode = countries[indexPath.row].countryCode
+        makeSegueToRegionalVC(countryCodeToPass: countryCode)
+        print(countryCode)
     }
     
     

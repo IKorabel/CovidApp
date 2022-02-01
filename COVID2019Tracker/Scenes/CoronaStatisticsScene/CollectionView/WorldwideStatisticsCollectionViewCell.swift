@@ -102,17 +102,17 @@ extension WorldwideStatisticsCollectionViewCell {
         func defineKindOfIndormationDependsOnIndex(information: Global) -> String {
             switch self {
             case .deaths:
-                return "\(information.totalDeaths)"
+                return "\(information.totalDeaths.formattedWithSeparator)"
             case .confirmed:
-                return "\(information.totalConfirmed)"
+                return "\(information.totalConfirmed.formattedWithSeparator)"
             case .recovered:
-                return "\(information.totalRecovered)"
+                return "\(information.totalRecovered.formattedWithSeparator)"
             case .newDeaths:
-                return "+\(information.newDeaths)"
+                return "+\(information.newDeaths.formattedWithSeparator)"
             case .newConfirmed:
-                return "+\(information.newConfirmed)"
+                return "+\(information.newConfirmed.formattedWithSeparator)"
             case .newRecovered:
-                return "+\(information.newRecovered)"
+                return "+\(information.newRecovered.formattedWithSeparator)"
             }
         }
     }

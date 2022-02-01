@@ -14,13 +14,33 @@ class APIService {
     private init() {}
     
     private let statisticsApiAddress = "https://api.covid19api.com/summary"
+  
     
-    func requestCovidData(completion: @escaping ((CovidStatistics?) -> Void) ) {
-        AF.request(statisticsApiAddress).responseJSON { (response) in
+    enum APILinks {
+        case summaryStatisticsLink
+        case countryLiveStatisticsLink(countryCode: String)
+        
+        var link: String {
+            switch self {
+            case .summaryStatisticsLink:
+                return "https://api.covid19api.com/summary"
+            case .countryLiveStatisticsLink(let countryCode):
+                return "https://api.covid19api.com/live/country/\(countryCode)"
+            }
+        }
+    }
+    
+    func requestCovidData(link: APILinks,completion: @escaping ((Any?) -> Void) ) {
+        AF.request(link.link).responseJSON { (response) in
         guard let response = response.data else { return }
-            
         do {
-            let decoded = try JSONDecoder().decode(CovidStatistics.self, from: response)
+            var decoded: Any
+            switch link {
+            case .summaryStatisticsLink:
+                decoded = try JSONDecoder().decode(CovidStatistics.self, from: response)
+            case .countryLiveStatisticsLink(_):
+                decoded = try JSONDecoder().decode([CovidLiveStatistic].self, from: response)
+            }
             completion(decoded)
         }  catch let DecodingError.dataCorrupted(context) {
             print(context)
