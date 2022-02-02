@@ -14,6 +14,7 @@ class GeoServices {
     
     private init() {}
     
+    /// Define coordinate for every country by geocoding. 
     func findLocationForEveryCountry(countries: [Country], completion: @escaping (([Country]) -> Void)) {
         var inoutCountries = [Country]()
         let geocoder = CLGeocoder()
@@ -24,7 +25,6 @@ class GeoServices {
             geocoder.geocodeAddressString(countryName) { placemark, error in
                 guard let placemark = placemark?.first, error == nil else { return }
                 guard let location = placemark.location else { return }
-                print("coordinate: \(location.coordinate)")
                 country.coordinates = location.coordinate
                 inoutCountries.append(country)
             }
@@ -33,12 +33,14 @@ class GeoServices {
         completion(inoutCountries)
     }
     
-    func showPlaces(map: MKMapView,provinceData: [CovidLiveStatistic]?) {
+    /// Create and show pin for every  province
+    public func showPlaces(map: MKMapView,provinceData: [ProvinceStatistics]?) {
         guard let provinceData = provinceData else { return }
         provinceData.forEach({ showLocation(coronavirusMap: map, coordinate: $0.convertCoordinatesToCLLocationCoordinate())})
     }
     
-    func showLocation(coronavirusMap: MKMapView, coordinate: CLLocationCoordinate2D?) {
+    /// Create and show annottation for every coordinste
+    public func showLocation(coronavirusMap: MKMapView, coordinate: CLLocationCoordinate2D?) {
            guard let coordinate = coordinate else { return }
            let span = MKCoordinateSpan(latitudeDelta: 50, longitudeDelta: 50)
            let region = MKCoordinateRegion(center: coordinate, span: span)

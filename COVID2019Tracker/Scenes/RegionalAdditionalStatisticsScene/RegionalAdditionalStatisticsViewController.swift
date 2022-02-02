@@ -11,12 +11,12 @@ import MapKit
 
 class RegionalAdditionalStatisticsViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationItem!
-    @IBOutlet weak var coronavirusMap: MKMapView!
+    @IBOutlet weak var provincesMap: MKMapView!
     @IBOutlet weak var provinceCollectionView: UICollectionView!
     
-    var geoServices = GeoServices.shared
+    let geoServices = GeoServices.shared
     var countryCode: String?
-    var provinceStatistics: [CovidLiveStatistic]?
+    var provinceStatistics: [ProvinceStatistics]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class RegionalAdditionalStatisticsViewController: UIViewController {
     }
     
     func showOnMap() {
-        geoServices.showPlaces(map: coronavirusMap, provinceData: provinceStatistics)
+        geoServices.showPlaces(map: provincesMap, provinceData: provinceStatistics)
     }
     
     func implementUIElements() {
@@ -38,36 +38,25 @@ class RegionalAdditionalStatisticsViewController: UIViewController {
         provinceCollectionView.dataSource = self
         provinceCollectionView.collectionViewLayout = createCollectionViewLayout()
         provinceCollectionView.register(ASCollectionViewHeader.self,
-                                        forSupplementaryViewOfKind: ASCollectionViewHeader.reuseIdentifier, withReuseIdentifier: ASCollectionViewHeader.reuseIdentifier)
+                                        forSupplementaryViewOfKind: ASCollectionViewHeader.reuseIdentifier,
+                                        withReuseIdentifier: ASCollectionViewHeader.reuseIdentifier)
         provinceCollectionView.backgroundColor = .secondarySystemBackground
     }
     
     func implementMapView() {
-        coronavirusMap.delegate = self
-        coronavirusMap.layer.cornerRadius = 20
+        provincesMap.delegate = self
+        provincesMap.layer.cornerRadius = 20
     }
     
     func createCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-        let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                heightDimension: .absolute(150))
-        let item = NSCollectionLayoutItem(layoutSize: layoutSize)
-        item.contentInsets.top = 10
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(600))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets.leading = 10
-        section.contentInsets.trailing = 10
-        section.contentInsets.top = 5
-        section.boundarySupplementaryItems = [
-            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: ASCollectionViewHeader.reuseIdentifier, alignment: .topLeading)
-        ]
-        return UICollectionViewCompositionalLayout(section: section)
+        let regionCell = CompositionalLayoutStorage.regionCell
+        return UICollectionViewCompositionalLayout(section: regionCell)
     }
     
     func requestRegionalStatistics() {
         guard let countryCode = countryCode else { return }
         APIService.shared.requestCovidData(link: .countryLiveStatisticsLink(countryCode: countryCode)) { [self] loadedData in
-            guard let countryStatistics = loadedData as? [CovidLiveStatistic] else { return }
+            guard let countryStatistics = loadedData as? [ProvinceStatistics] else { return }
             title = getTheCountryName()
             self.provinceStatistics = countryStatistics.splitByRegions()
             showOnMap()
@@ -86,15 +75,12 @@ class RegionalAdditionalStatisticsViewController: UIViewController {
 extension RegionalAdditionalStatisticsViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        var coronavirusAnnotationView = coronavirusMap.dequeueReusableAnnotationView(withIdentifier: "provinceAnnotation")
+        var coronavirusAnnotationView = provincesMap.dequeueReusableAnnotationView(withIdentifier: "provinceAnnotation")
+        
         if coronavirusAnnotationView == nil {
             coronavirusAnnotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "provinceAnnotation")
             coronavirusAnnotationView?.canShowCallout = true
-            let circle = UIImage(systemName:"circle.fill")!.withTintColor(.systemRed)
-            let size = CGSize(width: 30, height: 30)
-            coronavirusAnnotationView!.image = UIGraphicsImageRenderer(size:size).image {
-                _ in circle.draw(in:CGRect(origin:.zero, size:size))
-            }
+            coronavirusAnnotationView?.setSystemImage(systemImageName: "circle.fill", imageTintColor: .systemRed)
         } else {
             coronavirusAnnotationView?.annotation = annotation
         }
@@ -122,10 +108,7 @@ extension RegionalAdditionalStatisticsViewController: UICollectionViewDelegate, 
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeaders = ["Regions"]
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ASCollectionViewHeader.reuseIdentifier, for: indexPath) as? ASCollectionViewHeader else {
-        return UICollectionReusableView()
-        }
-        print("header")
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ASCollectionViewHeader.reuseIdentifier, for: indexPath) as? ASCollectionViewHeader else { return UICollectionReusableView() }
         header.setHeader(title: sectionHeaders[indexPath.section], buttonImage: nil)
         return header
     }

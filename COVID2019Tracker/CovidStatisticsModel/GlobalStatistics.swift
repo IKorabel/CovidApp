@@ -9,55 +9,8 @@
 import Foundation
 import CoreLocation
 
-var coronavirusInfo: Coronavirus?
-
-class Coronavirus: Decodable {
-    var confirmed: CasesInfo
-    var deaths: CasesInfo
-    var recovered: CasesInfo
-}
-
-struct CasesInfo: Decodable {
-    var latest: Int
-    var locations: [LocationData]
-}
-
-struct LocationData: Decodable {
-    var coordinates: Coordinate
-    var country: String
-    var latest: Int
-    var province: String
-}
-
-struct Coordinate: Decodable {
-    var lat: String
-    var long: String
-}
-
-struct History: Codable {
-    let history: [String: String]
-}
-
-extension Array where Element == LocationData {
-    
-    func convertToComfortableArray() -> [LocationData] {
-        let confirmedMerged = self
-        let new = confirmedMerged.reduce([LocationData]()) { result, location in
-         var temp = result
-         guard let index = result.firstIndex(where: { $0.country == location.country }) else {
-             temp.append(location)
-             return temp }
-         temp[index].latest = result[index].latest + location.latest
-         return temp
-        }
-        return new.sorted { ($0.latest > $1.latest)}
-    }
-    
-    
-}
-
 // MARK: - CovidStatistics
-struct CovidStatistics: Codable {
+struct GlobalStatistics: Codable {
     let id: String
     let message: String
     let global: Global

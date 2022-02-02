@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 
-
-enum CovidInformationTheme {
+/// With this  Enum we can select thr subject which we want to user basically on CoviidGuideVC
+enum CovidInformationGuideSubject {
     case symptoms, spreadpaths, precautions
     
+    /// ThemeColor of  CovidGuideVC
     var tintColor: UIColor {
         switch self {
         case .symptoms:
@@ -23,19 +24,19 @@ enum CovidInformationTheme {
             return .systemBlue
         }
     }
-    
-    var advices: [CoronavirusInformationCellData] {
-        let covidInfo = CoronavirusInfomation()
+    /// Guide information attached for a specific topic
+    var advices: [CovidGuideInfo] {
         switch self {
         case .symptoms:
-            return covidInfo.symptoms
+            return CovidGuideInformationStorage.symptoms
         case .spreadpaths:
-            return covidInfo.spreadPaths
+            return CovidGuideInformationStorage.spreadPaths
         case .precautions:
-            return covidInfo.precautions
+            return CovidGuideInformationStorage.precautions
         }
     }
     
+    /// Title attached for a specific topic
     var title: String {
         switch self {
         case .symptoms:

@@ -22,7 +22,7 @@ class CountriesStatisticsCollectionViewCell: UICollectionViewCell {
                        numberOfRecovered: country.totalRecovered.formattedWithSeparator)
     }
     
-    func setProvince(province: CovidLiveStatistic?) {
+    func setProvince(province: ProvinceStatistics?) {
         guard let province = province else { return }
         let provinceName = province.province.isEmpty ? province.country : province.province
         setInformation(regionName: provinceName,

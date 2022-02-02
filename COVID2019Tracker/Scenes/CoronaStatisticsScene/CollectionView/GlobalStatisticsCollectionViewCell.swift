@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorldwideStatisticsCollectionViewCell: UICollectionViewCell {
+class GlobalStatisticsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var categoryNameLabel: UILabel!
     @IBOutlet weak var categoryImage: UIImageView!
@@ -25,10 +25,7 @@ class WorldwideStatisticsCollectionViewCell: UICollectionViewCell {
     }
     
     func setCategoryInformation(information: Global, indexPath: IndexPath) {
-        guard let rawValue = Int("\(indexPath.section)\(indexPath.row)") else {
-        print("Не удалось преобразовать")
-        return
-        }
+        guard let rawValue = Int("\(indexPath.section)\(indexPath.row)") else { return }
         guard let statisticsCategory = StatisticsCategory(rawValue: rawValue) else { return }
         let amount = "\(statisticsCategory.defineKindOfIndormationDependsOnIndex(information: information))"
         let categoryColor = statisticsCategory.categoryColor
@@ -43,7 +40,7 @@ class WorldwideStatisticsCollectionViewCell: UICollectionViewCell {
     
 }
 
-extension WorldwideStatisticsCollectionViewCell {
+extension GlobalStatisticsCollectionViewCell {
     
     enum StatisticsCategory: Int {
         case deaths = 10

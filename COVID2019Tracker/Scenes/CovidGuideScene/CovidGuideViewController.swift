@@ -8,15 +8,13 @@
 
 import UIKit
 
-var tabBarResult = 0
 var informationNumber = 0
+var tabBarResult = 0
 
 class CovidGuideViewController: UIViewController {
     @IBOutlet weak var coronaInfoTableView: UITableView!
-    var coronavirusInfomation = CoronavirusInfomation()
-    var tabBar = TabBarController()
     
-    var informationTheme: CovidInformationTheme {
+    var informationTheme: CovidInformationGuideSubject {
         switch tabBarResult {
         case 1: return .symptoms
         case 2: return .spreadpaths
@@ -51,6 +49,7 @@ class CovidGuideViewController: UIViewController {
         coronaInfoTableView.tableFooterView = UIView()
         coronaInfoTableView.layer.cornerRadius = 20
     }
+    
 }
 
 extension CovidGuideViewController: UITableViewDelegate, UITableViewDataSource {
@@ -64,23 +63,24 @@ extension CovidGuideViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "coronavirusInfoCell") as? CoronavirusInfomationCell else { return UITableViewCell() }
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "coronavirusInfoCell") as? CovidGuideInformationCell else { return UITableViewCell() }
         cell.setInformation(information: informationTheme.advices[indexPath.row], tintColor: informationTheme.tintColor)
         return cell
     }
     
+    func createFooterView() -> UIView {
+        let label = UILabel()
+        label.textColor = .systemGray
+        label.font = label.font.withSize(8)
+        label.numberOfLines = 0
+        label.text = "         \(NSLocalizedString("WHO", comment: ""))"
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let label = UILabel()
-//         label.textColor = .systemGray
-//         label.font = label.font.withSize(8)
-//         label.numberOfLines = 0
-//         label.text = "         \(NSLocalizedString("WHO", comment: ""))"
-//         label.textAlignment = .left
-//
-//         let view = UIView()
-//         view.addSubview(label)
-//         return view
-        return UIView()
+        return createFooterView()
     }
     
      func scrollViewDidScroll(_ scrollView: UIScrollView) {

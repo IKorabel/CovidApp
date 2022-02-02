@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 // MARK: - CovidLiveStatistic
-struct CovidLiveStatistic: Codable {
+struct ProvinceStatistics: Codable {
     let id: String
     let country: String
     let countryCode: String
@@ -43,7 +43,7 @@ struct CovidLiveStatistic: Codable {
     }
 }
 
-extension CovidLiveStatistic {
+extension ProvinceStatistics {
     
     func convertCoordinatesToCLLocationCoordinate() -> CLLocationCoordinate2D? {
         guard !lat.isEmpty, !lon.isEmpty else { return nil }
@@ -52,10 +52,11 @@ extension CovidLiveStatistic {
     }
 }
 
-extension Array where Element == CovidLiveStatistic {
+extension Array where Element == ProvinceStatistics {
     
-    func splitByRegions() -> [CovidLiveStatistic] {
-        var countryStatisticsSplittedByProvinces = [CovidLiveStatistic]()
+    ///  Defides the array into certain regions and assigns the newest data to each of them
+    func splitByRegions() -> [ProvinceStatistics] {
+        var countryStatisticsSplittedByProvinces = [ProvinceStatistics]()
         let allProvinces = self.map({$0.province}).uniqued()
         if allProvinces.isEmpty {
             guard let lastElement = self.last else { return self }
@@ -66,11 +67,12 @@ extension Array where Element == CovidLiveStatistic {
                 countryStatisticsSplittedByProvinces.append(filteredByRegion)
             }
         }
-        let categorizedSortedArray = countryStatisticsSplittedByProvinces.categorizeByDangerLevel().sorted(by: {$0.confirmed > $1.confirmed})
+        let categorizedSortedArray = countryStatisticsSplittedByProvinces.setDangerLevelForEveryRegion().sorted(by: {$0.confirmed > $1.confirmed})
         return categorizedSortedArray
     }
     
-    func categorizeByDangerLevel() -> [CovidLiveStatistic] {
+    /// Assigns each region a severity level based on the number of confirmed cases
+    func setDangerLevelForEveryRegion() -> [ProvinceStatistics] {
         let confirmedCaseSum = self.map({$0.confirmed}).reduce(0, +)
         let confirmedCasesAverage = confirmedCaseSum / self.count
         self.forEach { statistic in
@@ -80,6 +82,7 @@ extension Array where Element == CovidLiveStatistic {
         return self
     }
     
+    /// Define the danger level  for region
     func defineDangerLevel(casesAmount: Int, average: Int) -> DangerLevel {
         if casesAmount > average {
             return .high
