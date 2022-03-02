@@ -14,3 +14,11 @@
 - Apple Native Design using Human Interface Guidelines 
 - Only fonts used by Apple
 - Apple Native Icons
+
+## Visual redesign 
+#### Global Statistics Screen
+![github-small](Group%208%20-%20Eng.png)
+#### Province Statistics Screen
+![github-small](Group%209%20-%20Eng.png)
+#### Symptoms Statistics Screen
+![github-small](Group%2010%20-%20Eng.png)
