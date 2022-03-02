@@ -16,9 +16,9 @@
 - Apple Native Icons
 
 ## Visual redesign 
-#### Global Statistics Screen
+- Global Statistics Screen
 ![github-small](Group%208%20-%20Eng.png)
-#### Province Statistics Screen
+- Province Statistics Screen
 ![github-small](Group%209%20-%20Eng.png)
-#### Symptoms Statistics Screen
+- Symptoms Statistics Screen
 ![github-small](Group%2010%20-%20Eng.png)
